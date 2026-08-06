@@ -1,8 +1,8 @@
 #TODO: Change to the required and/or optional fields of the anndata
 type: file
-example: "resources_test/task_template/cxg_mouse_pancreas_atlas/train.h5ad"
-label: "Training data"
-summary: "The training data in h5ad format"
+example: "resources_test/task_template/cxg_mouse_pancreas_atlas/train.h5ad" # maybe adjust this after syncing resources
+label: "Input data"
+summary: "The input data for the spatial TI task"
 info:
   format:
     type: h5ad

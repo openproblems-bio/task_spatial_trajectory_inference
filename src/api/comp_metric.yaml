@@ -3,9 +3,9 @@ info:
   type: metric
   type_info:
     label: Metric
-    summary: A task template metric.
+    summary: A metric for spatial TI task.
     description: |
-      A metric for evaluating method predictions.
+      A metric for evaluating spatial TI method predictions.
 arguments:
   - name: "--input_solution"
     __merge__: file_solution.yaml
