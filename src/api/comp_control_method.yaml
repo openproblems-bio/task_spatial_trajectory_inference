@@ -29,5 +29,5 @@ test_resources:
     path: /common/component_tests/run_and_check_output.py
   - type: python_script
     path: /common/component_tests/check_config.py
-  - path: /resources_test/task_template/cxg_mouse_pancreas_atlas
-    dest: resources_test/task_template/cxg_mouse_pancreas_atlas
+  - path: /resources_test/common/cxg_mouse_pancreas_atlas
+    dest: resources_test/common/cxg_mouse_pancreas_atlas

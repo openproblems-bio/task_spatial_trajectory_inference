@@ -11,7 +11,7 @@ arguments:
     __merge__: file_common_dataset.yaml
     direction: input
     required: true
-  - name: "--output"
+  - name: "--output_dataset"
     __merge__: file_dataset.yaml
     direction: output
     required: true
