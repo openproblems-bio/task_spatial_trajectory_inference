@@ -61,3 +61,7 @@ info:
         name: normalization_id
         description: "Which normalization was used"
         required: true
+      - type: dataframe
+        name: marker_genes
+        description: "Marker genes per biological state, with expected ordering along the trajectory (columns: gene_name, biological_state, expected_order). Used by marker-based metrics when provided."
+        required: false

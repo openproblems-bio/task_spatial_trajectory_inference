@@ -10,6 +10,10 @@ info:
         name: counts
         description: Raw counts
         required: true
+      - type: double
+        name: normalized
+        description: Normalized expression values
+        required: true
     obs:
       - type: string
         name: cell_type
@@ -19,10 +23,23 @@ info:
         name: batch
         description: Batch information
         required: true
+    var:
+      - type: boolean
+        name: hvg
+        description: Whether or not the feature is considered to be a 'highly variable gene'
+        required: true
+      - type: double
+        name: hvg_score
+        description: A ranking of the features by hvg.
+        required: true
     obsm:
       - type: double
         name: X_spatial
         description: Spatial coordinates of each cell/spot.
+        required: true
+      - type: double
+        name: X_pca
+        description: The resulting PCA embedding.
         required: true
     uns:
       - type: string
