@@ -1,23 +1,43 @@
 __merge__: ../../api/comp_data_processor.yaml
 name: process_dataset
-arguments:
-  - name: "--method"
-    type: "string"
-    description: "The process method to assign train/test."
-    choices: ["batch", "random"]
-    default: "batch"
-  - name: "--obs_label"
-    type: "string"
-    description: "Which .obs slot to use as label."
-    default: "cell_type"
-  - name: "--obs_batch"
-    type: "string"
-    description: "Which .obs slot to use as batch covariate."
-    default: "batch"
-  - name: "--seed"
-    type: "integer"
-    description: "A seed for the subsampling."
-    example: 123
+namespace: data_processors
+
+info:
+  label: Process dataset
+  summary: "Filter and split a common dataset into task-specific data and solution files."
+
+argument_groups:
+  - name: Parameters
+    arguments:
+      - name: "--dataset_id"
+        type: "string"
+        description: "New dataset ID"
+        required: false
+      - name: "--obs_label"
+        type: "string"
+        description: "Which .obs slot to use as label."
+        default: "cell_type"
+      - name: "--obs_batch"
+        type: "string"
+        description: "Which .obs slot to use as batch covariate."
+        default: "batch"
+      - name: "--obs_ptime"
+        type: "string"
+        description: "Which .obs slot to use as pseudotime covariate."
+        default: "pseudotime_true"
+      - name: "--obsm_spatial"
+        type: "string"
+        description: "Which .obsm slot to use as spatial metadata."
+        default: "X_spatial"
+      - name: "--layer_counts"
+        type: "string"
+        description: "Which .layers slot to use as counts."
+        default: "counts"
+      - name: "--seed"
+        type: "integer"
+        description: "The seed for." # TODO for what..?
+        default: 1
+
 resources:
   - type: python_script
     path: script.py
@@ -32,3 +52,7 @@ runners:
   - type: nextflow
     directives:
       label: [highmem, midcpu, midtime]
+
+test_resources:
+  - path: /resources_test/common/cxg_mouse_pancreas_atlas
+    dest: resources_test/common/cxg_mouse_pancreas_atlas

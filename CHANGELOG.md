@@ -1,4 +1,4 @@
-# task_template x.y.z
+# task_spatial_trajectory_inference 1.0.0
 
 ## BREAKING CHANGES
 
@@ -6,28 +6,13 @@
 
 ## NEW FUNCTIONALITY
 
-* Added `control_methods/true_labels` component (PR #5).
-
-* Added `methods/logistic_regression` component (PR #5).
-
-* Added `metrics/accuracy` component (PR #5).
 
 ## MAJOR CHANGES
 
-* Updated `api` files (PR #5).
-
-* Updated configs, components and CI to the latest Viash version (PR #8).
-
-* Updated to Viash 0.9.4 (PR #12).
-
-* Use dependencies in `openproblems-bio/openproblems` (PR #12).
+* Updated `api` files and set the data processor (PR #1).
 
 ## MINOR CHANGES
 
-* Updated `README.md` (PR #5).
-
-* `run_benchmark`: write the commit the workflow ran from and the launch time into
-  `task_info.yaml`, instead of publishing `_viash.yaml` verbatim (PR #18).
 
 ## BUGFIXES
 

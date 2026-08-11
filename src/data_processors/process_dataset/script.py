@@ -7,12 +7,13 @@ import openproblems as op
 ## VIASH START
 par = {
     'input': 'resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad',
-    'method': 'batch',
     'seed': None,
     'obs_batch': 'batch',
     'obs_label': 'cell_type',
-    'output_train': 'train.h5ad',
-    'output_test': 'test.h5ad',
+    'obs_ptime': 'pseudotime_true',
+    'obsm_spatial': 'X_spatial',
+    'layer_counts': 'counts',
+    'output_dataset': 'dataset.h5ad',
     'output_solution': 'solution.h5ad'
 }
 meta = {
@@ -25,62 +26,51 @@ meta = {
 sys.path.append(meta['resources_dir'])
 from subset_h5ad_by_format import subset_h5ad_by_format
 
+# read viash config
 config = op.project.read_viash_config(meta["config"])
 
 # set seed if need be
 if par["seed"]:
-    print(f">> Setting seed to {par['seed']}")
+    print(f">> Setting seed to {par['seed']}", flush=True)
     random.seed(par["seed"])
 
+# read the dataset
 print(">> Load data", flush=True)
-adata = ad.read_h5ad(par["input"])
-print("input:", adata)
+input = ad.read_h5ad(par['input'])
+print("input:", input, flush=True)
 
-print(f">> Process data using {par['method']} method")
-if par["method"] == "batch":
-    batch_info = adata.obs[par["obs_batch"]]
-    batch_categories = batch_info.dtype.categories
-    test_batches = random.sample(list(batch_categories), 1)
-    is_test = [ x in test_batches for x in batch_info ]
-elif par["method"] == "random":
-    train_ix = np.random.choice(adata.n_obs, round(adata.n_obs * 0.8), replace=False)
-    is_test = [ not x in train_ix for x in range(0, adata.n_obs) ]
-
-# subset the different adatas
-print(">> Figuring which data needs to be copied to which output file", flush=True)
-# use par arguments to look for label and batch value in different slots
+# map the source slots of the common dataset onto the dest slots expected by the
+# task-specific file formats (file_dataset.yaml / file_solution.yaml)
 slot_mapping = {
+    "layers": {
+        "counts": par["layer_counts"],
+    },
     "obs": {
-        "label": par["obs_label"],
+        "cell_type": par["obs_label"],
         "batch": par["obs_batch"],
-    }
+        "pseudotime_true": par["obs_ptime"],
+    },
+    "obsm": {
+        "X_spatial": par["obsm_spatial"],
+    },
 }
 
-print(">> Creating train data", flush=True)
-output_train = subset_h5ad_by_format(
-    adata[[not x for x in is_test]],
+print(">> Creating input data for the methods", flush=True)
+output_dataset = subset_h5ad_by_format(
+    input,
     config,
-    "output_train",
-    slot_mapping
-)
-
-print(">> Creating test data", flush=True)
-output_test = subset_h5ad_by_format(
-    adata[is_test],
-    config,
-    "output_test",
+    "output_dataset",
     slot_mapping
 )
 
 print(">> Creating solution data", flush=True)
 output_solution = subset_h5ad_by_format(
-    adata[is_test],
+    input,
     config,
     "output_solution",
     slot_mapping
 )
 
 print(">> Writing data", flush=True)
-output_train.write_h5ad(par["output_train"])
-output_test.write_h5ad(par["output_test"])
+output_dataset.write_h5ad(par["output_dataset"])
 output_solution.write_h5ad(par["output_solution"])

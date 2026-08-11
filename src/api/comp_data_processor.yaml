@@ -3,20 +3,16 @@ info:
   type: data_processor
   type_info:
     label: Data processor
-    summary: A data processor.
-    description: |
+    summary: A data processor for the spatial TI task.
+    description: | # better description TODO
       A component for processing a Common Dataset into a task-specific dataset.
 arguments:
   - name: "--input"
     __merge__: file_common_dataset.yaml
     direction: input
     required: true
-  - name: "--output_train"
-    __merge__: file_train.yaml
-    direction: output
-    required: true
-  - name: "--output_test"
-    __merge__: file_test.yaml
+  - name: "--output_dataset"
+    __merge__: file_dataset.yaml
     direction: output
     required: true
   - name: "--output_solution"

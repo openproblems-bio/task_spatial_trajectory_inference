@@ -1,42 +1,32 @@
-#TODO: Change to the required and/or optional fields of the anndata
 type: file
-example: "resources_test/task_template/cxg_mouse_pancreas_atlas/solution.h5ad"
+example: "resources_test/task_spatial_trajectory_inference/cxg_mouse_pancreas_atlas/solution.h5ad"
 label: "Solution"
-summary: "The solution for the test data"
+summary: "The solution (ground truth) for the test data"
 info:
   format:
     type: h5ad
-    layers: 
+    layers:
       - type: integer
         name: counts
         description: Raw counts
         required: true
-      - type: double
-        name: normalized
-        description: Normalized counts
-        required: true
     obs:
       - type: string
-        name: label
-        description: Ground truth cell type labels
+        name: cell_type
+        description: Cell type information
         required: true
       - type: string
         name: batch
         description: Batch information
         required: true
-    var:
-      - type: boolean
-        name: hvg
-        description: Whether or not the feature is considered to be a 'highly variable gene'
-        required: true
       - type: double
-        name: hvg_score
-        description: A ranking of the features by hvg.
+        name: pseudotime_true
+        description: Ground truth pseudotime for each cell/spot.
         required: true
     obsm:
       - type: double
-        name: X_pca
-        description: The resulting PCA embedding.
+        name: X_spatial
+        description: Spatial coordinates of each cell/spot.
         required: true
     uns:
       - type: string
@@ -71,3 +61,7 @@ info:
         name: normalization_id
         description: "Which normalization was used"
         required: true
+      - type: dataframe
+        name: marker_genes
+        description: "Marker genes per biological state, with expected ordering along the trajectory (columns: gene_name, biological_state, expected_order). Used by marker-based metrics when provided."
+        required: false

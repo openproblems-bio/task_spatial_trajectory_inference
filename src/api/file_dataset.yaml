@@ -1,24 +1,23 @@
-#TODO: Change to the required and/or optional fields of the anndata
 type: file
-example: "resources_test/task_template/cxg_mouse_pancreas_atlas/train.h5ad"
-label: "Training data"
-summary: "The training data in h5ad format"
+example: "resources_test/task_spatial_trajectory_inference/cxg_mouse_pancreas_atlas/dataset.h5ad"
+label: "Input data"
+summary: "The input data for the spatial TI methods"
 info:
   format:
     type: h5ad
-    layers: 
+    layers:
       - type: integer
         name: counts
         description: Raw counts
         required: true
       - type: double
         name: normalized
-        description: Normalized counts
+        description: Normalized expression values
         required: true
     obs:
       - type: string
-        name: label
-        description: Ground truth cell type labels
+        name: cell_type
+        description: Cell type information
         required: true
       - type: string
         name: batch
@@ -34,6 +33,10 @@ info:
         description: A ranking of the features by hvg.
         required: true
     obsm:
+      - type: double
+        name: X_spatial
+        description: Spatial coordinates of each cell/spot.
+        required: true
       - type: double
         name: X_pca
         description: The resulting PCA embedding.
