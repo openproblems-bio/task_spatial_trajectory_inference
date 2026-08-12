@@ -1,0 +1,74 @@
+__merge__: ../../api/comp_method.yaml
+
+name: spatrack
+label: spaTrack
+summary: "spaTrack captures fine local details of trajectory within a single tissue section of spatial transcriptomics (ST) data, as well as reconstruct cell dynamics across multiple tissue sections in a time series."
+description: | #TODO come back with detailed description of how WE are implementing it
+  To capture potential dynamic drivers, spaTrack models the fate of a cell as a function of expression profile 
+  along the time points driven by transcription factors, which facilitates the identification of key molecular 
+  regulators that govern cellular trajectories. In this task, the starting cluster is automatically determined 
+  using the functions provided by spaTrack. 
+references:
+  doi: 
+    - 10.1016/j.cels.2025.101194
+links:
+  documentation: https://spatrack.readthedocs.io/en/latest/
+  repository: https://github.com/yzf072/spaTrack
+
+
+
+info:
+  preferred_normalization: log_cp10k
+
+arguments:
+  - name: "--alpha1"
+    type: "double"
+    default: 0.5
+    description: The proportion of gene expression information.
+  - name: "--alpha2"
+    type: "double"
+    default: 0.5
+    description: The proportion of spatial location information.
+
+resources:
+  - type: python_script
+    path: script.py
+
+engines:
+  # custom image due to spatrack's python 3.9 pin
+  - type: docker
+    image: python:3.9-slim
+    setup:
+      - type: apt
+        packages:
+          - procps              # required by Nextflow
+          - git                 # pip needs it to install openproblems core from git+https
+          - build-essential     # compiler for any source builds (pysal/rtree deps)
+          - libspatialindex-dev
+          - libgeos-dev
+      - type: python
+        upgrade: true
+        github:
+          - "openproblems-bio/core#subdirectory=packages/python/openproblems"
+        packages:
+          - anndata~=0.10.0
+          - pyyaml
+          - requests
+          - jsonschema
+          - spatrack==1.0.2
+          - pot>=0.9.0
+          - scanpy>=1.9.3,<1.10 
+          - plotly>=5.15.0
+          - pygam>=0.8.1
+          - networkx>=3.0
+          - numpy==1.24.4
+          - scipy==1.10.1
+          - torch>=2.0.1
+          - pandas==1.4.3
+          - pysal==2.6.0
+
+runners:
+  - type: executable
+  - type: nextflow
+    directives:
+      label: [midtime,midmem,midcpu]

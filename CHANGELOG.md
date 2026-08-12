@@ -6,6 +6,7 @@
 
 ## NEW FUNCTIONALITY
 
+* Added `spaTrack` method (PR #4).
 
 ## MAJOR CHANGES
 
