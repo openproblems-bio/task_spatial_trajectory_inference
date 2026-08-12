@@ -1,15 +1,14 @@
-#TODO: Change to the required and/or optional fields of the anndata
 type: file
-example: "resources_test/task_template/cxg_mouse_pancreas_atlas/prediction.h5ad"
+example: "resources_test/task_spatial_trajectory_inference/cxg_mouse_pancreas_atlas/prediction.h5ad"
 label: "Predicted data"
 summary: A predicted dataset as output by a method.
 info:
   format:
     type: h5ad
     obs:
-      - type: string
-        name: label_pred
-        description: Predicted labels for the test cells.
+      - type: double
+        name: pseudotime_inferred
+        description: Predicted pseudotime for each cell.
         required: true
     uns:
       - type: string

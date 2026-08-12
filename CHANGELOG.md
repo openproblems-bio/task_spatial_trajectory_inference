@@ -16,3 +16,4 @@
 
 ## BUGFIXES
 
+* Updated `file_prediction.yaml` in `api` (PR #3).
