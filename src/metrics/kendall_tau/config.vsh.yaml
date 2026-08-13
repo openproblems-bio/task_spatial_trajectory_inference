@@ -26,25 +26,12 @@ info:
            doi     = {10.1038/s41592-020-0772-5}
            }
       links:
-        # URL to the documentation for this metric (required).
         documentation: https://url.to/the/documentation
-        # URL to the code repository for this metric (required).
         repository: https://github.com/organisation/repository
-      # The minimum possible value for this metric (required)
       min: -1
-      # The maximum possible value for this metric (required)
       max: 1
-      # Whether a higher value represents a 'better' solution (required)
       maximize: true
 
-# Component-specific parameters (optional)
-# arguments:
-#   - name: "--n_neighbors"
-#     type: "integer"
-#     default: 5
-#     description: Number of neighbors to use.
-
-# Resources required to run the component
 resources:
   - type: python_script
     path: script.py
