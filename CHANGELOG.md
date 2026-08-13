@@ -7,6 +7,7 @@
 ## NEW FUNCTIONALITY
 
 * Added `spaTrack` method (PR #4).
+* Added `Spearman's correlation` metric (PR #5).
 
 ## MAJOR CHANGES
 
