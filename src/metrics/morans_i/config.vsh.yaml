@@ -1,0 +1,97 @@
+__merge__: ../../api/comp_metric.yaml
+
+name: morans_i
+
+
+
+# Metadata for your component
+info:
+  metrics:
+    - name: morans_i
+      label: Moran's I
+      summary: "Measures the spatial autocorrelation of the inferred pseudotime across the spatial coordinates of the cells/spots."
+      description: |
+        Computes Moran's I statistic for the inferred pseudotime, using a k-nearest-neighbour
+        graph built on the spatial coordinates (`obsm['X_spatial']`) of the cells/spots.
+
+        Moran's I quantifies how similar the pseudotime values of spatially neighbouring
+        cells/spots are. Values close to 1 indicate a spatially smooth trajectory in which
+        neighbouring cells receive similar pseudotime values, values around 0 indicate a
+        spatially random assignment, and negative values indicate that neighbouring cells
+        receive dissimilar pseudotime values.
+
+        Note that this metric evaluates the spatial coherence of the prediction only and does
+        not compare it against the ground-truth pseudotime; a spatially smooth but incorrect
+        ordering can still score highly.
+
+      references:
+        doi:
+          - 10.2307/2332142
+        bibtex: |
+          @article{Moran_1950,
+           author  = {Moran, P. A. P.},
+           title   = {Notes on Continuous Stochastic Phenomena},
+           journal = {Biometrika},
+           volume  = {37},
+           number  = {1/2},
+           pages   = {17--23},
+           year    = {1950},
+           doi     = {10.2307/2332142}
+           }
+
+      links:
+
+        documentation: https://scanpy.readthedocs.io/en/stable/api/generated/scanpy.metrics.morans_i.html
+
+        repository: https://github.com/scverse/scanpy
+      # The minimum possible value for this metric (required)
+      min: -1
+      # The maximum possible value for this metric (required)
+      max: 1
+      # Whether a higher value represents a 'better' solution (required)
+      maximize: true
+
+# Component-specific parameters (optional)
+arguments:
+  - name: "--n_neighbors"
+    type: "integer"
+    default: 6
+    description: Number of spatial neighbours used to build the k-NN graph.
+
+# Resources required to run the component
+resources:
+  # The script of your component (required)
+  - type: python_script
+    path: script.py
+  # Additional resources your script needs (optional)
+  # - type: file
+  #   path: weights.pt
+
+engines:
+  # Specifications for the Docker image for this component.
+  - type: docker
+    image: python:3.11-slim
+    setup:
+      - type: apt
+        packages:
+          - procps
+          - git
+      - type: python
+        packages:
+          - anndata~=0.10.0
+          - scanpy~=1.10.0
+          - scipy
+          - pandas
+          - pyyaml
+          - requests
+          - jsonschema
+        github:
+          - "openproblems-bio/core#subdirectory=packages/python/openproblems"
+
+runners:
+  # This platform allows running the component natively
+  - type: executable
+  # Allows turning the component into a Nextflow module / pipeline.
+  - type: nextflow
+    directives:
+      label: [midtime,midmem,midcpu]
