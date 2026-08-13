@@ -8,6 +8,7 @@
 
 * Added `spaTrack` method (PR #4).
 * Added `Spearman's correlation` metric (PR #5).
+* Added `Moran's I`metric (PR #6)
 
 ## MAJOR CHANGES
 

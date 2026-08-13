@@ -2,9 +2,6 @@ __merge__: ../../api/comp_metric.yaml
 
 name: morans_i
 
-
-
-# Metadata for your component
 info:
   metrics:
     - name: morans_i
@@ -44,31 +41,22 @@ info:
         documentation: https://scanpy.readthedocs.io/en/stable/api/generated/scanpy.metrics.morans_i.html
 
         repository: https://github.com/scverse/scanpy
-      # The minimum possible value for this metric (required)
       min: -1
-      # The maximum possible value for this metric (required)
       max: 1
-      # Whether a higher value represents a 'better' solution (required)
       maximize: true
 
-# Component-specific parameters (optional)
 arguments:
   - name: "--n_neighbors"
     type: "integer"
     default: 6
     description: Number of spatial neighbours used to build the k-NN graph.
 
-# Resources required to run the component
 resources:
-  # The script of your component (required)
   - type: python_script
     path: script.py
-  # Additional resources your script needs (optional)
-  # - type: file
-  #   path: weights.pt
+
 
 engines:
-  # Specifications for the Docker image for this component.
   - type: docker
     image: python:3.11-slim
     setup:
@@ -89,9 +77,7 @@ engines:
           - "openproblems-bio/core#subdirectory=packages/python/openproblems"
 
 runners:
-  # This platform allows running the component natively
   - type: executable
-  # Allows turning the component into a Nextflow module / pipeline.
   - type: nextflow
     directives:
       label: [midtime,midmem,midcpu]
