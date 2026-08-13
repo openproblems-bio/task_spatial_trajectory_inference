@@ -15,7 +15,7 @@
 
 ## MINOR CHANGES
 
-* Added package versions to the spearman config file.
+* Added package versions to the spearman config file. (PR #7)
 
 ## BUGFIXES
 
