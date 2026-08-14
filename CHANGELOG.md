@@ -8,6 +8,7 @@
 
 * Added `spaTrack` method (PR #4).
 * Added `Spearman's correlation` metric (PR #5).
+* Added `Moran's I` metric (PR #6).
 
 ## MAJOR CHANGES
 
@@ -16,6 +17,7 @@
 ## MINOR CHANGES
 
 * Added package versions to the spearman config file. (PR #7)
+* Added package versions to the moran's I config (PR #6).
 
 ## BUGFIXES
 
