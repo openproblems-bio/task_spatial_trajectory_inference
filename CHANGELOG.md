@@ -10,6 +10,8 @@
 * Added `Spearman's correlation` metric (PR #5).
 * Added `Moran's I` metric (PR #6).
 
+* Added `stlearn`method (PR #9).
+
 ## MAJOR CHANGES
 
 * Updated `api` files and set the data processor (PR #1).
