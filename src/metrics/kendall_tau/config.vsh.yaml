@@ -1,0 +1,65 @@
+__merge__: ../../api/comp_metric.yaml
+
+name: kendall_tau
+
+info:
+  metrics:
+
+    - name: kendall_tau
+      label: Kendall Tau
+      summary: "Computes the Kendall's τ coefficient between inferred and ground-truth pseudotime."
+      description: |
+        Calculates the Kendall's τ coefficient between predicted and ground-truth pseudotime. 
+        Kendall's τ (tau) is a non-parametric statistic that measures the ordinal association, or rank correlation, between two variables based on how similarly they order a set of observations.
+      references:
+        doi:
+          - 10.1038/s41592-020-0772-5
+        bibtex: |
+          @article{Virtanen_2020,
+           author  = {Virtanen, Pauli and Gommers, Ralf and Oliphant, Travis E. and Haberland, Matt and Reddy, Tyler and Cournapeau, David and Burovski, Evgeni and Peterson, Pearu and Weckesser, Warren and Bright, Jonathan and {van der Walt}, St{\'e}fan J. and Brett, Matthew and Wilson, Joshua and Jarrod Millman, K. and Mayorov, Nikolay and Nelson, Andrew R. J. and Jones, Eric and Kern, Robert and Larson, Eric and Carey, C. J. and Polat, {\dot{I}}lhan and Feng, Yu and Moore, Eric W. and VanderPlas, Jake and Laxalde, Denis and Perktold, Josef and Cimrman, Robert and Henriksen, Ian and Quintero, E. A. and Harris, Charles R. and Archibald, Anne M. and Ribeiro, Ant{\^o}nio H. and Pedregosa, Fabian and {van Mulbregt}, Paul and {SciPy 1.0 Contributors}},
+           title   = {Author Correction: SciPy 1.0: fundamental algorithms for scientific computing in Python},
+           journal = {Nature Methods},
+           volume  = {17},
+           number  = {3},
+           pages   = {352},
+           year    = {2020},
+           doi     = {10.1038/s41592-020-0772-5}
+           }
+      links:
+        documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kendalltau.html
+        repository: https://github.com/scipy/scipy
+      min: -1
+      max: 1
+      maximize: true
+
+resources:
+  - type: python_script
+    path: script.py
+
+engines:
+  - type: docker
+    image: python:3.11-slim
+    setup:
+      - type: apt
+        packages:
+          - procps              # required by Nextflow
+          - git                 # pip needs it to install openproblems core from git+https
+      - type: python
+        packages:
+          - anndata~=0.10.9
+          - scanpy~=1.10.4
+          - numpy~=2.4.6
+          - pandas~=3.0.5
+          - scipy~=1.17.1
+          - pyyaml~=6.0.3
+          - requests~=2.34.2
+          - jsonschema~=4.26.0
+        github:
+          - "openproblems-bio/core#subdirectory=packages/python/openproblems"
+
+
+runners:
+  - type: executable
+  - type: nextflow
+    directives:
+      label: [midtime,midmem,midcpu]
