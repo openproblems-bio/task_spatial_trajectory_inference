@@ -45,13 +45,14 @@ engines:
           - git                 # pip needs it to install openproblems core from git+https
       - type: python
         packages:
-          - anndata~=0.10.0
-          - scanpy~=1.10.0
-          - scipy
-          - pandas
-          - pyyaml
-          - requests
-          - jsonschema
+          - anndata~=0.10.9
+          - scanpy~=1.10.4
+          - numpy~=2.4.6
+          - pandas~=3.0.5
+          - scipy~=1.17.1
+          - pyyaml~=6.0.3
+          - requests~=2.34.2
+          - jsonschema~=4.26.0
         github:
           - "openproblems-bio/core#subdirectory=packages/python/openproblems"
 

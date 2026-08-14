@@ -16,6 +16,7 @@
 
 ## MINOR CHANGES
 
+* Added package versions to the spearman config file. (PR #7)
 * Added package versions to the moran's I config (PR #6).
 
 ## BUGFIXES
