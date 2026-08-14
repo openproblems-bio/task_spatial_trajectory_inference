@@ -9,6 +9,8 @@
 * Added `spaTrack` method (PR #4).
 * Added `Spearman's correlation` metric (PR #5).
 
+* Added `stlearn`method (PR #9).
+
 ## MAJOR CHANGES
 
 * Updated `api` files and set the data processor (PR #1).

@@ -1,0 +1,82 @@
+__merge__: ../../api/comp_method.yaml
+
+name: stlearn
+label: stLearn
+summary: "stLearn reconstructs spatial trajectories by combining diffusion pseudotime on the gene expression with the spatial arrangement of the annotated clusters."
+description: |
+  stLearn infers a "pseudo-time-space" (PSTS) trajectory. Cells are first embedded with PCA and
+  connected in a k-NN graph, after which every annotated cell type is split into spatially
+  contiguous sub-clusters with DBSCAN. A PAGA graph over these clusters is combined with
+  diffusion pseudotime (DPT) to order the cells, and the resulting graph is oriented by
+  pseudotime to enumerate the trajectories that start at the root cluster.
+
+  The root cluster is determined automatically from the data: the cell type whose cells express
+  the largest number of genes on average is taken to be the least differentiated one. This is the
+  same CytoTRACE-like proxy that stLearn uses internally to select the root cell within the root
+  cluster. Cells that do not lie on any trajectory starting from the root are reported as NaN.
+references:
+  doi:
+    - 10.1038/s41467-023-43120-6
+links:
+  documentation: https://stlearn.readthedocs.io/en/latest/
+  repository: https://github.com/BiomedicalMachineLearning/stLearn
+
+
+
+# Metadata for your component
+info:
+  preferred_normalization: log_cp10k
+
+arguments:
+  - name: "--n_comps"
+    type: "integer"
+    default: 50
+    description: Number of principal components to compute.
+  - name: "--n_neighbors"
+    type: "integer"
+    default: 200
+    description: Number of neighbors used to build the k-NN graph.
+  - name: "--resolution"
+    type: "double"
+    default: 0.8
+    description: Resolution of the Leiden clustering.
+  - name: "--eps"
+    type: "double"
+    default: 1500
+    description: |
+      Maximum distance between two spots for them to be considered spatial neighbours by the
+      DBSCAN sub-clustering, in the units of the spatial coordinates.
+  - name: "--seed"
+    type: "integer"
+    default: 0
+    description: Random seed.
+
+resources:
+  - type: python_script
+    path: script.py
+
+engines:
+  # custom image because stlearn pins numpy<2 and requires python >=3.10,<3.13
+  - type: docker
+    image: python:3.11-slim
+    setup:
+      - type: apt
+        packages:
+          - procps              # required by Nextflow
+          - git                 # pip needs it to install openproblems core from git+https
+          - build-essential     # compiler for any source builds
+      - type: python
+        upgrade: true
+        github:
+          - "openproblems-bio/core#subdirectory=packages/python/openproblems"
+        packages:
+          - pyyaml
+          - requests
+          - jsonschema
+          - stlearn==1.2.2
+
+runners:
+  - type: executable
+  - type: nextflow
+    directives:
+      label: [midtime,midmem,midcpu]
