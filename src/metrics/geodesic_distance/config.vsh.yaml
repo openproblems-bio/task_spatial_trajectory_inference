@@ -1,16 +1,16 @@
 __merge__: ../../api/comp_metric.yaml
 
-name: kendall_tau
+name: geodesic_distance
 
 info:
   metrics:
 
-    - name: kendall_tau
-      label: Kendall Tau
-      summary: "Computes the Kendall's τ coefficient between inferred and ground-truth pseudotime."
+    - name: geodesic_distance
+      label: Geodesic Distance Correlation
+      summary: "Computes the Spearman correlation between pairwise geodesic distances of inferred and ground-truth pseudotime."
       description: |
-        Calculates the Kendall's τ coefficient between predicted and ground-truth pseudotime. 
-        Kendall's τ (tau) is a non-parametric statistic that measures the ordinal association, or rank correlation, between two variables based on how similarly they order a set of observations.
+        Calculates the Spearman rank correlation between all pairwise distances of predicted pseudotime and all pairwise distances of ground-truth pseudotime, computed over every unique pair of cells.
+        This measures whether the relative spacing between cells along the trajectory is preserved and captures distortions where a method compresses or stretches segments of the trajectory even if the overall cell ordering is correct.
       references:
         doi:
           - 10.1038/s41592-020-0772-5
@@ -26,7 +26,7 @@ info:
            doi     = {10.1038/s41592-020-0772-5}
            }
       links:
-        documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kendalltau.html
+        documentation: https://docs.scipy.org/doc/scipy/reference/spatial.distance.html
         repository: https://github.com/scipy/scipy
       min: -1
       max: 1
@@ -56,7 +56,6 @@ engines:
           - jsonschema~=4.26.0
         github:
           - "openproblems-bio/core#subdirectory=packages/python/openproblems"
-
 
 runners:
   - type: executable
