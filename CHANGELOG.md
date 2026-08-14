@@ -9,7 +9,7 @@
 * Added `spaTrack` method (PR #4).
 * Added `Spearman's correlation` metric (PR #5).
 * Added `Moran's I` metric (PR #6).
-
+* Added `kendall_tau` and `geodesic distance` metric (PR #8)
 * Added `stlearn`method (PR #9).
 
 ## MAJOR CHANGES
